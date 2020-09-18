@@ -1,0 +1,66 @@
+/* MYSQL SLT QUESTIONS */
+
+1.List all columns of salespeople table.
+ans. Select * from salespeople;
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2.list all customers with a rating of 100.
+ans.select * from customer where rating=100;
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3.find all records in the customer table with null values in city column.
+ans.select * from customer where city='null'; ::displays empty set.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4. Find the largest order taken by each salesperson on each date.
+ans. select a.onum,max(a.amt),a.odate,a.cnum,b.snum from orders a,customer b where a.cnum=b.cnum group by b,snum,a.odate;
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+5. Arrange the Orders table by descending customer number.
+ans. select * from orders order by cnum desc;
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+6. Find which salespeople currently have orders in the Orders table.
+ans.select a.onum,a.amt,a.odate,a.cnum,b.snum,b.sname from orders a,customer b where a.cnum=b.cnum group by b.snum,a.odate;
+   select a.onum,a.amt,a.odate,a.cnum,b.snum from orders a,customer b where a.cnum=b.cnum group by b.snum;
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+7. List names of all customers matched with the salespeople serving them.
+ans. select a.sname,a.city,b.cname from salespeople a,customer b where a.snum=b.snum;
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+8. Find the names and numbers of all salespeople who had more than one customer.
+ans.select a.snum,b.sname,count(*) as cust_count from customer a, salespeople b where a.snum=b.snum group by a.snum;
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+9. Count the orders of each of the salespeople and output the results in descending order.
+ans: select b.snum,c.sname,count(*) as order_count from orders a,customer b,salespeople c where a.cnum=b.snum and b.snum=c.snum group by snum;
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------  
+10. List the Customer table if and only if one or more of the customers in the Customer table are
+located in San Jose.
+ans: select * from customer where (select count(*) from customer where city='san jose')>1;
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+11. Match salespeople to customers according to what city they lived in.
+ans. select a.sname,b.cname,b.city from salespeople a, customer b where a.snum=b.snum and a.city=b.city;
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+12. Find the largest order taken by each salesperson.
+ans: select a.sname,a.snum,b.onum,b.amt from salespeople a,orders b,customer c where a.snum=c.snum and c.cnum=b.cnum group by sname;
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+13. Find customers in San Jose who have a rating above 200.
+ans. select * from customer where rating>=200 and city='san jose';
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+14. List the names and commissions of all salespeople in London.
+ans.select distinct sname,comm,city from salespeople where city='london';
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+15. List all the orders of salesperson Motika from the Orders table.
+ans. select a.sname,b.onum,b.amt from salespeople a,orders b,customer c where a.snum=c.snum and c.cnum=b.cnum and sname='motika';
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+16. Find all customers with orders on October 3.
+ans.select * from orders where odate='1996-03-10'; 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+17. Give the sums of the amounts from the Orders table, grouped by date, eliminating all those
+dates where the SUM was not at least 2000.00 above the MAX amount.
+ans: select odate,sum(amt) from orders group by odate;
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+18. Select all orders that had amounts that were greater than at least one of the orders from
+October 6.
+ans: select * from orders where amt>(amt(odate='1996-06-10' order by cnum;-----------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+19. Write a query that uses the EXISTS operator to extract all salespeople who have customers
+with a rating of 300.
+ans. select sname,snum from salespeople where exists(select rating from customer where rating=100);
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+20. Find all pairs of customers having the same rating.
+ans: select * from rating order by rating;
